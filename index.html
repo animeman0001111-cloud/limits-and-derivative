@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Calculus Visual Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+:root{
+  --ink:#1f2937;
+  --paper:#fffef9;
+  --accent1:#ff5fa2;
+  --accent2:#3f7cff;
+  --accent3:#4caf50;
+  --accent4:#f5c400;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  color:var(--ink);
+  background:#eceff5;
+  overflow-x:hidden;
+}
+
+/* ===== PARALLAX BACKGROUND ===== */
+.parallax{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+}
+.layer{
+  position:absolute;
+  inset:-20%;
+  opacity:.35;
+  animation:drift linear infinite;
+}
+.layer.grid{
+  background-image:
+    linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation-duration:140s;
+}
+.layer.paper{
+  background:radial-gradient(circle at 30% 20%,#ffffff 0,#f3f4f6 45%,transparent 70%);
+  animation-duration:110s;
+}
+.layer.color{
+  background:conic-gradient(from 180deg,var(--accent1),var(--accent2),var(--accent3),var(--accent4),var(--accent1));
+  opacity:.08;
+  animation-duration:180s;
+}
+
+@keyframes drift{
+  to{transform:translate3d(12%,12%,0)}
+}
+
+/* ===== TIMELINE ===== */
+.timeline{
+  position:fixed;
+  left:40px;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:linear-gradient(var(--accent1),var(--accent2),var(--accent3));
+  opacity:.6;
+}
+.dot{
+  position:absolute;
+  left:-6px;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 0 0 4px rgba(0,0,0,.15);
+}
+
+/* ===== SECTIONS ===== */
+section{
+  max-width:1100px;
+  margin:140px auto;
+  padding:90px 80px;
+  background:var(--paper);
+  border-radius:32px;
+  box-shadow:0 40px 120px rgba(0,0,0,.25);
+  opacity:0;
+  transform:translateY(120px) scale(.9);
+  transition:1.2s cubic-bezier(.19,1,.22,1);
+}
+section.show{
+  opacity:1;
+  transform:none;
+}
+
+section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:32px;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,.04) 0,
+    rgba(0,0,0,.04) 1px,
+    transparent 1px,
+    transparent 30px
+  );
+  pointer-events:none;
+}
+
+h1{
+  text-align:center;
+  font-size:42px;
+  letter-spacing:5px;
+  margin-bottom:70px;
+}
+
+/* ===== CARD SYSTEM ===== */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:36px;
+}
+
+.box{
+  padding:34px;
+  border-radius:26px;
+  background:linear-gradient(145deg,#ffffff,#fff7e2);
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
+  font-size:18px;
+  transition:.6s cubic-bezier(.19,1,.22,1);
+  position:relative;
+}
+
+.box::before{
+  content:'';
+  position:absolute;
+  inset:-2px;
+  border-radius:28px;
+  background:conic-gradient(var(--accent1),var(--accent2),var(--accent3),var(--accent4),var(--accent1));
+  opacity:.35;
+  filter:blur(8px);
+  z-index:-1;
+  animation:spin 10s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.box:hover{
+  transform:translateY(-22px) scale(1.08);
+}
+
+/* ===== COLOR TAGS ===== */
+.pink{border-left:7px solid var(--accent1)}
+.blue{border-left:7px solid var(--accent2)}
+.green{border-left:7px solid var(--accent3)}
+.yellow{border-left:7px solid var(--accent4)}
+.red{border-left:7px solid #ef4444}
+</style>
+</head>
+
+<body>
+
+<div class="parallax">
+  <div class="layer grid"></div>
+  <div class="layer paper"></div>
+  <div class="layer color"></div>
+</div>
+
+<div class="timeline"></div>
+<section>
+<h1>WHAT IS A LIMIT:-</h1>
+  <div class="box red"><p>A limit describes the behavior of a function as the input value 
+x gets closer to a particular number, without necessarily being equal to that number. It tells us what value the function 
+f(x) is approaching as 𝑥 approaches a given point from both the left and the right. Even if the function is not defined at that point, or has a different
+ value there, the limit may still exist. Limits form the foundation of calculus and are essential for understanding concepts such 
+ as continuity, derivatives, and integrals, as they help explain how functions behave near specific points and at infinity..</p>
+</div>
+
+
+
+<div class="box blue"></div>
+</section>
+
+<section>
+<h1>INFINITE LIMITS</h1>
+<div class="card-grid">
+  <div class="box pink">A limit is said to be infinite when the values of the function 
+𝑓(𝑥)
+f(x) increase or decrease without any bound as 𝑥 approaches a particular point. This means that as 
+x gets closer and closer to a certain value, the function does not approach a fixed real number; instead, it becomes arbitrarily large in the positive direction (approaching +
+∞) or arbitrarily large in the negative direction (approaching 
+−∞). An infinite limit describes the behavior of the function near that point rather than an actual numerical value, and it usually indicates the presence of a vertical asymptote in the graph of the function..</div>
+  
+  </div>
+<div class="box yellow"><img src="C:\Users\HP\OneDrive\Desktop\verilog\limits and derivative\1.png" alt="graphiical representation"width="800px" height="600px"></div>
+</section>
+
+<section>
+<h1>Analytical and Graphical Interpretation of Limits :-</h1>
+  <div class="box yellow"><p>Analytical and Graphical Interpretation of Limits :-
+</p>
+<li>Analytically using algebraic simplification</li>
+<li>Analytically using algebraic simplification</li>
+    
+                         <ul>                        lim ​(x2−4)/(x−2)=4
+						                             x→2  </ul>
+<ul>Analytically using algebraic simplification</ul>
+
+
+
+</div>
+
+</section>
+
+
+<section>
+<h1>Vertical and Horizontal Asymptotes :-</h1>
+  <div class="box yellow"><p>An asymptote is a line that a graph approaches but never touches.</p>
+<li>Vertical asymptote: Occurs when the function grows infinitely near a value</li>
+<li>Horizontal asymptote: Describes end behavior as x→±∞</li>
+Example:     
+                         <ul> f(x)=1/x</ul>
+<ul>Vertical asymptote at x=0</ul>
+
+<ul>Horizontal asymptote at y=0</ul>
+
+</div>
+<div class="box red"><img src="‪C:\Users\HP\Downloads\download.png" alt="graphiical representation"width="800px" height="600px"></div>
+
+</section>
+
+
+
+
+<section>
+<h1>CONTINUITY</h1>
+<div class="card-grid">
+  <div class="box green">f(a) exists
+  <p><li>This means the function has a value at 
+x=a.</li>
+
+<li>The point 
+(a,f(a)) is defined.</li>
+
+<li>There is no hole or missing value at
+x=a.</li>
+
+<p>👉 Example:
+If f(a)=3, then the function has a point at height 3 whenx=a.</p></p>
+  </div>
+  <div class="box blue">lim x→a f(x) exists
+  <p>This means when x approaches a from both sides (left and right), the function values approach the same number.</p>
+
+<li>Left-hand limit = Right-hand limit</li>
+
+<li>The function does not jump, break, or oscillate near a.</li>
+
+<p>👉 Even if the function is not defined at a, the limit can still exist.</p></p></div>
+  <div class="box red">lim x→a f(x) = f(a)
+  <p>This connects the limit with the actual value of the function.</p>
+
+<li>The value the function approaches near a is exactly the value at a.</li>
+
+<li>The graph meets the point smoothly without a gap.</li></p>
+  </div>
+</div>
+</section>
+
+<section>
+<h1>Types of Discontinuities:-</h1>
+  <div class="box yellow"><p>Discontinuities occur when continuity conditions are not satisfied.</p>
+  <h2>Three Common Types:</h2>
+<li>Removable discontinuity – hole in the graph</li>
+<li>Jump discontinuity – sudden jump between values</li>
+<li>Infinite discontinuity – vertical asymptote</li>
+
+</div>
+<div class="box red"><img src="‪C:\Users\HP\Downloads\download.png" alt="graphiical representation"width="800px" height="600px"></div>
+
+</section>
+
+<section>
+<h1>DERIVATIVE</h1>
+
+<div class="card-grid"> <h1>PRESS TO KNOW </h1>
+  <div class="box pink"> <a href="file:///C:/Users/HP/OneDrive/Desktop/verilog/Expressing%20.html">
+  <button><div class="box blue">INTRODUCTION TO DERIVATIVE</div>  </button>
+</a>
+  <a href="file:///C:/Users/HP/OneDrive/Desktop/verilog/types%20of%20derivative.html">
+  <button><div class="box blue"> TYPES OF DERIVATIVES</div> </button>
+</a>
+<a href="file:///C:/Users/HP/OneDrive/Desktop/verilog/average%20.html">
+  <button><div class="box blue">AVERAGE RATE OF CHANGE  </div>   </button>
+</a>
+<a href="file:///C:/Users/HP/OneDrive/Desktop/verilog/INSTANSTANUOS.html">
+  <button><div class="box blue">INSTANTANOUS RATE OF CHANGE  </div>   </button>
+</a>
+</div>
+  
+</div>
+</section>
+<section>
+<h1> REFLECTIONS </h1>
+  <div class="box yellow"><p>This chapter developed a strong understanding of how limits describe the behavior of functions and form the 
+  basis of continuity and differentiation. Learning about asymptotes, continuity, and discontinuities enhanced my ability to analyze graphs 
+  both analytically and visually. The concept of derivatives clarified how rates of change and slopes are calculated at a point, connecting 
+  mathematics to physical interpretation. Overall, this chapter strengthened my problem-solving skills and highlighted the importance of 
+  limits and derivatives in real-life and engineering applications. .</p>
+  
+
+</div>
+</section>
+
+<script>
+/* ===== SCROLL REVEAL ===== */
+const sections = document.querySelectorAll('section');
+const timeline = document.querySelector('.timeline');
+
+sections.forEach((sec,i)=>{
+  const dot=document.createElement('div');
+  dot.className='dot';
+  dot.style.top=(140+i*180)+'px';
+  timeline.appendChild(dot);
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+    }
+  });
+},{threshold:.3});
+
+sections.forEach(s=>observer.observe(s));
+</script>
+
+</body>
+</html>

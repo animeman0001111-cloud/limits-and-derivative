@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Derivative as Slope of a Curve</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===== GLOBAL ===== */
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(120deg,#e0f2fe,#fef9c3,#fce7f3);
+  background-size:300% 300%;
+  animation:bgMove 15s ease infinite;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ===== PAGE ===== */
+.page{
+  max-width:1200px;
+  margin:50px auto;
+  padding:60px;
+  background:#ffffffee;
+  border-radius:30px;
+  box-shadow:0 30px 90px rgba(0,0,0,.2);
+  animation:pageEnter 1.2s ease;
+}
+
+@keyframes pageEnter{
+  from{opacity:0;transform:translateY(80px)}
+  to{opacity:1;transform:none}
+}
+
+h1{
+  text-align:center;
+  font-size:46px;
+  border:6px solid #6366f1;
+  padding:20px 50px;
+  border-radius:26px;
+  display:inline-block;
+}
+
+.subtitle{
+  text-align:center;
+  font-size:22px;
+  margin:30px 0 70px;
+  color:#334155;
+}
+
+/* ===== CARDS ===== */
+.section{
+  display:flex;
+  flex-direction:column;
+  gap:80px;
+}
+
+.card{
+  padding:50px;
+  border-radius:30px;
+  box-shadow:0 25px 70px rgba(0,0,0,.18);
+  opacity:0;
+  transform:translateY(120px) scale(.9);
+  transition:1s ease;
+}
+
+.card.show{
+  opacity:1;
+  transform:none;
+}
+
+.card:hover{
+  transform:scale(1.03);
+}
+
+/* COLORS */
+.idea{background:linear-gradient(135deg,#dcfce7,#bbf7d0)}
+.math{background:linear-gradient(135deg,#e0e7ff,#c7d2fe)}
+.graphCard{background:linear-gradient(135deg,#fee2e2,#fecaca)}
+.apply{background:linear-gradient(135deg,#fff7ed,#fed7aa)}
+
+h2{font-size:30px}
+p{font-size:19px;line-height:1.8}
+
+.formula{
+  margin-top:20px;
+  padding:18px;
+  background:rgba(255,255,255,.7);
+  border-radius:16px;
+  font-size:22px;
+  font-weight:bold;
+  text-align:center;
+}
+
+/* ===== GRAPH ===== */
+.graph{
+  width:75%;
+  margin:35px auto 0;
+  display:block;
+  transition:.8s ease;
+}
+
+.graph:hover{
+  transform:scale(1.05);
+  filter:drop-shadow(0 15px 30px rgba(0,0,0,.3));
+}
+
+.axis-label{
+  font-size:12px;
+  fill:#334155;
+  font-weight:bold;
+}
+
+.point{
+  fill:#dc2626;
+}
+
+/* ===== OBSERVER ===== */
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<center><h1>Derivative Using Slope Concept</h1></center>
+<div class="subtitle">
+Understanding how derivatives describe changing quantities using tangents
+</div>
+
+<div class="section">
+
+<!-- CONCEPT -->
+<div class="card idea">
+<h2>📌 What is a Derivative?</h2>
+<p>
+A <b>derivative</b> of a function at a point represents the
+<b>slope of the curve at that point</b>.
+</p>
+<p>
+For straight lines, slope is constant.  
+For curves, the slope changes — so we calculate it at a
+<b>specific point</b>.
+</p>
+</div>
+
+<!-- SLOPE IDEA -->
+<div class="card math">
+<h2>📐 Slope Concept</h2>
+<p>
+The slope of a line is defined as:
+</p>
+
+<div class="formula">
+Slope = (Change in y) / (Change in x)
+</div>
+
+<p>
+To find the slope of a curve, we:
+</p>
+<ul style="font-size:18px">
+<li>Take two nearby points on the curve</li>
+<li>Draw a <b>secant line</b></li>
+<li>Bring the points closer</li>
+<li>The secant becomes a <b>tangent</b></li>
+</ul>
+</div>
+
+<!-- GRAPH -->
+<div class="card graphCard">
+<h2>📈 Derivative as Slope of Tangent</h2>
+
+<svg class="graph" viewBox="0 0 320 220">
+
+<!-- Axes -->
+<line x1="30" y1="190" x2="300" y2="190" stroke="#475569" stroke-width="2"/>
+<line x1="160" y1="20" x2="160" y2="200" stroke="#475569" stroke-width="2"/>
+
+<!-- Curve -->
+<path d="M30 160 C100 40,220 40,300 160"
+      fill="none" stroke="#2563eb" stroke-width="3"/>
+
+<!-- Tangent -->
+<line x1="90" y1="110" x2="230" y2="70"
+      stroke="#dc2626" stroke-width="3"/>
+
+<!-- Point -->
+<circle cx="160" cy="90" r="6" class="point"/>
+
+<!-- Labels -->
+<text x="295" y="205" class="axis-label">x</text>
+<text x="140" y="30" class="axis-label">y</text>
+<text x="165" y="85" class="axis-label">P</text>
+
+</svg>
+
+<p style="text-align:center;font-size:18px">
+The red line is the <b>tangent</b> at point P.  
+Its slope equals the <b>derivative</b>.
+</p>
+</div>
+
+<!-- MATH DEFINITION -->
+<div class="card math">
+<h2>📘 Mathematical Definition</h2>
+
+<p>
+Let the function be <b>y = f(x)</b>.  
+Consider two points:
+</p>
+
+<div class="formula">
+(x, f(x)) and (x + h, f(x + h))
+</div>
+
+<p>
+Slope of secant line:
+</p>
+
+<div class="formula">
+[f(x + h) − f(x)] / h
+</div>
+
+<p>
+As <b>h → 0</b>, the secant becomes a tangent.
+</p>
+
+<div class="formula">
+f′(x) = lim (h → 0) [f(x + h) − f(x)] / h
+</div>
+</div>
+
+<!-- APPLICATION -->
+<div class="card apply">
+<h2>🌍 Meaning of Derivative in Real Life</h2>
+<ul style="font-size:19px;line-height:1.8">
+<li>Velocity → slope of distance–time graph</li>
+<li>Acceleration → slope of velocity–time graph</li>
+<li>Growth & decay → slope of population curves</li>
+</ul>
+
+<p>
+<b>Hence, derivative measures how fast one quantity changes with respect to another.</b>
+</p>
+</div>
+
+</div>
+</div>
+
+<script>
+const cards=document.querySelectorAll('.card');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('show');
+  });
+},{threshold:0.3});
+cards.forEach(c=>observer.observe(c));
+</script>
+
+</body>
+</html>

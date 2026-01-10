@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Instantaneous Rate of Change</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ========== GLOBAL ========== */
+body{
+  margin:0;
+  font-family:'Segoe UI','Comic Sans MS',sans-serif;
+  background:linear-gradient(135deg,#ecfeff,#fef3c7);
+}
+
+.page{
+  max-width:1100px;
+  margin:40px auto;
+  padding:60px;
+  background:#fffefc;
+  border-radius:26px;
+  box-shadow:0 40px 120px rgba(0,0,0,.28);
+}
+
+/* ========== TITLE ========== */
+h1{
+  text-align:center;
+  font-size:44px;
+  border:6px solid #0f766e;
+  display:inline-block;
+  padding:20px 60px;
+  border-radius:22px;
+  background:white;
+  animation:titlePop 1.4s ease both;
+}
+
+@keyframes titlePop{
+  from{opacity:0; transform:scale(.6) translateY(-30px)}
+  to{opacity:1; transform:none}
+}
+
+.subtitle{
+  text-align:center;
+  font-size:22px;
+  margin:30px 0 60px;
+  opacity:0;
+  animation:subtitleIn 1.2s ease forwards;
+  animation-delay:.4s;
+}
+
+@keyframes subtitleIn{
+  from{opacity:0; transform:translateY(30px)}
+  to{opacity:1; transform:none}
+}
+
+/* ========== CARD SECTIONS ========== */
+.section{
+  margin-bottom:50px;
+  padding:36px;
+  border-radius:26px;
+  position:relative;
+  overflow:hidden;
+  opacity:0;
+  transform:
+    perspective(1400px)
+    translateY(200px)
+    scale(0.7)
+    rotateX(30deg);
+
+  border:3px solid transparent;
+  background:
+    linear-gradient(180deg,#ffffff,#f0fdfa) padding-box,
+    linear-gradient(135deg,#14b8a6,#22c55e,#84cc16,#facc15) border-box;
+}
+
+.section::before{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  background:linear-gradient(120deg,transparent,rgba(20,184,166,.35),transparent);
+  transform:translateX(-120%) rotate(8deg);
+  pointer-events:none;
+}
+
+.section.show{
+  animation:cardCinematic 2.6s cubic-bezier(.16,1,.3,1) forwards,
+             borderFlow 4s linear forwards;
+}
+
+.section.show::before{
+  animation:lightSweep 2s ease forwards;
+}
+
+@keyframes cardCinematic{
+  0%{
+    opacity:0;
+    transform:
+      perspective(1400px)
+      translateY(200px)
+      scale(0.7)
+      rotateX(30deg);
+  }
+  45%{
+    opacity:1;
+    transform:
+      perspective(1400px)
+      translateY(-32px)
+      scale(1.1)
+      rotateX(-12deg);
+  }
+  70%{
+    transform:
+      perspective(1400px)
+      translateY(14px)
+      scale(0.96)
+      rotateX(4deg);
+  }
+  100%{
+    opacity:1;
+    transform:
+      perspective(1400px)
+      translateY(0)
+      scale(1)
+      rotateX(0deg);
+  }
+}
+
+@keyframes lightSweep{
+  to{transform:translateX(120%) rotate(8deg)}
+}
+
+@keyframes borderFlow{
+  0%{background-position:0% 50%,0% 50%}
+  100%{background-position:0% 50%,300% 50%}
+}
+
+/* ========== HEADINGS ========== */
+h2{
+  font-size:26px;
+  color:#0f766e;
+  margin-bottom:14px;
+}
+
+/* ========== FORMULA BOX ========== */
+.formula{
+  text-align:center;
+  font-size:28px;
+  line-height:2;
+  padding:22px;
+  margin-top:18px;
+  border-radius:18px;
+  background:#ecfeff;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  opacity:0;
+}
+
+.section.show .formula{
+  animation:formulaZoom .9s ease forwards;
+  animation-delay:.4s;
+}
+
+@keyframes formulaZoom{
+  from{opacity:0; transform:scale(.85)}
+  to{opacity:1; transform:none}
+}
+
+/* ========== LIST CARDS ========== */
+ul{font-size:20px; padding-left:0}
+
+li{
+  list-style:none;
+  margin:14px 0;
+  padding:16px 20px;
+  border-radius:16px;
+  background:#ffffff;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  opacity:0;
+  transform:translateX(-30px);
+}
+
+.section.show li{
+  animation:listSlide .6s ease forwards;
+}
+
+.section.show li:nth-child(1){animation-delay:.3s}
+.section.show li:nth-child(2){animation-delay:.5s}
+.section.show li:nth-child(3){animation-delay:.7s}
+
+@keyframes listSlide{
+  to{opacity:1; transform:none}
+}
+
+/* ========== GRAPH SECTION ========== */
+.graph{
+  width:100%;
+  height:260px;
+  margin-top:20px;
+}
+
+.graph path{
+  fill:none;
+  stroke-width:3;
+  stroke-linecap:round;
+}
+
+.curve{
+  stroke:#0f766e;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+}
+
+.tangent{
+  stroke:#f59e0b;
+  stroke-dasharray:400;
+  stroke-dashoffset:400;
+}
+
+.section.show .curve{
+  animation:drawCurve 2s ease forwards;
+}
+
+.section.show .tangent{
+  animation:drawTangent 1.2s ease forwards;
+  animation-delay:1.6s;
+}
+
+@keyframes drawCurve{
+  to{stroke-dashoffset:0}
+}
+
+@keyframes drawTangent{
+  to{stroke-dashoffset:0}
+}
+}
+
+/* ========== HIGHLIGHTS ========== */
+.math{color:#0f766e;font-weight:bold}
+.good{color:#16a34a;font-weight:bold}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <center><h1>Instantaneous Rate of Change</h1></center>
+  <div class="subtitle">
+    Measures the rate of change at a single point
+  </div>
+
+  <div class="section">
+    <h2>📌 Definition</h2>
+    <p style="font-size:20px;">
+      The <b>instantaneous rate of change</b> of a function at a specific point
+      measures how fast the output of the function is changing at that exact point.
+      It is the foundation of the concept of the <b>derivative</b>.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>📐 Mathematical Expression</h2>
+    <div class="formula">
+      <span class="math">f'(a) = lim (h → 0)</span><br>
+      <span class="math">[ f(a + h) − f(a) ] / h</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📊 Interpretation</h2>
+    <ul>
+      <li>Represents the <b>slope of the tangent line</b> at a point.</li>
+      <li>Shows how quickly a quantity changes at an instant.</li>
+      <li>Used to compute <span class="good">velocity</span>, acceleration, and growth rates.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📈 Graphical Representation</h2>
+    <p style="font-size:20px;">The curve shows <b>f(x) = - x²</b> and the tangent line shows the instantaneous rate of change at a point.</p>
+
+    <svg class="graph" viewBox="0 0 400 250">
+      <!-- axes -->
+      <path d="M40 210 L360 210" stroke="#999" />
+      <path d="M40 210 L40 20" stroke="#999" />
+
+      <!-- axis labels -->
+      <text x="365" y="215" font-size="14" fill="#555">x</text>
+      <text x="28" y="25" font-size="14" fill="#555">y</text>
+
+      <!-- curve y = x^2 -->
+      <path class="curve" d="M40 210 Q200 20 360 210" />
+      <text x="260" y="70" font-size="14" fill="#0f766e">y = - x²</text>
+
+      <!-- tangent line (INTERSECTS the curve exactly at the contact point) -->
+      <path class="tangent" d="M120 160 L320 40" />
+      <text x="305" y="55" font-size="14" fill="#f59e0b">Tangent</text>
+
+      <!-- point of contact (curve ∩ tangent) -->
+      <circle cx="200" cy="115" r="6" fill="#dc2626" />
+      <text x="210" y="110" font-size="13" fill="#dc2626">(a, f(a))</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <h2>✏ Example</h2>
+    <div class="formula">
+      f(x) = x² <br><br>
+      f'(x) = 2x <br><br>
+      Instantaneous rate at x = 3 is <br>
+      <span class="math">f'(3) = 6</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section');
+
+function playPreview(){
+  sections.forEach((sec,i)=>{
+    setTimeout(()=>{
+      sec.classList.add('show');
+    }, i*750);
+  });
+}
+
+playPreview();
+</script>
+
+</body>
+</html>
